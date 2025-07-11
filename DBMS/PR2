@@ -1,0 +1,196 @@
+-- 🌐 OPEN MYSQL TERMINAL
+mysql -u root -p      -- Login to MySQL
+exit;                 -- Exit MySQL
+
+-- 📁 DATABASE COMMANDS
+
+-- Create a database
+CREATE DATABASE database_name;
+-- Example:
+CREATE DATABASE Student;
+
+-- Show all databases
+SHOW DATABASES;
+
+-- Use/select a database
+USE database_name;
+-- Example:
+USE Student;
+
+-- Delete (drop) a database
+DROP DATABASE database_name;
+-- Example:
+DROP DATABASE Student;
+
+
+-- 📄 TABLE COMMANDS
+
+-- Create a table
+CREATE TABLE table_name (
+    column1 datatype constraints,
+    column2 datatype constraints,
+    ...
+);
+-- Example:
+CREATE TABLE student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT,
+    gender VARCHAR(10),
+    marks FLOAT
+);
+
+-- Show all tables in current database
+SHOW TABLES;
+
+-- Drop a table (deletes structure + data)
+DROP TABLE table_name;
+-- Example:
+DROP TABLE student;
+
+
+-- 📥 INSERT COMMANDS
+
+-- Insert single row
+INSERT INTO table_name (column1, column2, ...)
+VALUES (value1, value2, ...);
+
+-- Insert multiple rows
+INSERT INTO table_name (column1, column2, ...)
+VALUES 
+  (value1a, value2a, ...),
+  (value1b, value2b, ...);
+
+-- Example:
+INSERT INTO student (name, age, gender, marks)
+VALUES 
+  ('Amit', 20, 'Male', 85.5),
+  ('Sneha', 19, 'Female', 92.3),
+  ('Ravi', 21, 'Male', 78.0);
+
+
+-- 🔍 SELECT COMMAND
+
+-- View all records
+SELECT * FROM table_name;
+
+-- Example:
+SELECT * FROM student;
+
+
+-- 🛠️ ALTER TABLE COMMANDS
+
+-- Add a new column
+ALTER TABLE table_name
+ADD column_name datatype constraints;
+
+-- Example:
+ALTER TABLE student
+ADD email VARCHAR(100) UNIQUE;
+
+-- Add multiple columns
+ALTER TABLE table_name
+ADD column1 datatype,
+ADD column2 datatype;
+
+-- Example:
+ALTER TABLE student
+ADD phone VARCHAR(15),
+ADD address VARCHAR(255);
+
+-- Modify column type
+ALTER TABLE table_name
+MODIFY column_name new_datatype;
+
+-- Example:
+ALTER TABLE student
+MODIFY marks DECIMAL(5,2);
+
+-- Rename a column
+ALTER TABLE table_name
+CHANGE old_column_name new_column_name datatype;
+
+-- Example:
+ALTER TABLE student
+CHANGE phone mobile VARCHAR(15);
+
+-- Drop a column
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+-- Example:
+ALTER TABLE student
+DROP COLUMN address;
+
+
+-- 📝 RENAME TABLE
+
+-- Rename a table
+RENAME TABLE old_table_name TO new_table_name;
+
+-- Example:
+RENAME TABLE student TO students;
+
+
+-- ✏️ UPDATE DATA
+
+-- Update rows in table
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+-- Example:
+UPDATE students
+SET marks = 90.5
+WHERE id = 1;
+
+
+-- ❌ DELETE ROWS
+
+-- Delete rows based on condition
+DELETE FROM table_name
+WHERE condition;
+
+-- Example:
+DELETE FROM students
+WHERE id = 2;
+
+
+-- 👁️ VIEWS
+
+-- Create a view
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+-- Example:
+CREATE VIEW high_scorers AS
+SELECT name, marks
+FROM students
+WHERE marks > 80;
+
+-- Select from view
+SELECT * FROM view_name;
+-- Example:
+SELECT * FROM high_scorers;
+
+-- Update a view (drop + recreate)
+DROP VIEW IF EXISTS view_name;
+-- Example:
+DROP VIEW IF EXISTS high_scorers;
+
+CREATE VIEW view_name AS
+SELECT column1, column2
+FROM table_name
+WHERE condition;
+-- Example:
+CREATE VIEW high_scorers AS
+SELECT name, marks, age
+FROM students
+WHERE marks > 75;
+
+-- Drop a view
+DROP VIEW view_name;
+-- Example:
+DROP VIEW high_scorers;
