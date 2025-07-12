@@ -1,0 +1,127 @@
+-- 📁 DATABASE COMMANDS
+CREATE DATABASE TournamentDatabase;
+USE TournamentDatabase;
+-- DROP DATABASE TournamentDatabase;
+
+-- 📄 TABLE COMMANDS
+
+-- PLAYER table
+CREATE TABLE PLAYER (
+    P_id INT PRIMARY KEY,
+    P_name VARCHAR(100),
+    Phone_no VARCHAR(15)
+);
+
+-- GAME_SESSIONS table
+CREATE TABLE GAME_SESSIONS (
+    Session_no INT PRIMARY KEY,
+    Start DATETIME,
+    End DATETIME,
+    P_id INT,
+    FOREIGN KEY (P_id) REFERENCES PLAYER(P_id)
+);
+
+-- PLAYER_ACHIEVEMENT table
+CREATE TABLE PLAYER_ACHIEVEMENT (
+    Achiev_id INT PRIMARY KEY,
+    Achiev_name VARCHAR(100),
+    P_id INT,
+    FOREIGN KEY (P_id) REFERENCES PLAYER(P_id)
+);
+
+-- LEADERBOARD table
+CREATE TABLE LEADERBOARD (
+    W_id INT PRIMARY KEY,
+    W_name VARCHAR(100),
+    Session_no INT,
+    FOREIGN KEY (Session_no) REFERENCES GAME_SESSIONS(Session_no)
+);
+
+-- 📥 INSERT COMMANDS
+
+-- Insert into PLAYER
+INSERT INTO PLAYER VALUES 
+(1, 'Alice', '9876543210'),
+(2, 'Bob', '9123456780'),
+(3, 'Charlie', '9001122334');
+
+-- Insert into GAME_SESSIONS
+INSERT INTO GAME_SESSIONS VALUES 
+(101, '2025-07-01 10:00:00', '2025-07-01 11:00:00', 1),
+(102, '2025-07-02 12:00:00', '2025-07-02 13:30:00', 2);
+
+-- Insert into PLAYER_ACHIEVEMENT
+INSERT INTO PLAYER_ACHIEVEMENT VALUES 
+(201, 'FIRST WIN', 1),
+(202, 'TOP SCORER', 2);
+
+-- Insert into LEADERBOARD
+INSERT INTO LEADERBOARD VALUES 
+(301, 'Alice', 101),
+(302, 'Bob', 102);
+
+-- 🔍 SELECT COMMANDS
+
+-- Select all players
+SELECT * FROM PLAYER;
+
+-- Select all player achievements
+SELECT P_name, Achiev_name
+FROM PLAYER
+JOIN PLAYER_ACHIEVEMENT ON PLAYER.P_id = PLAYER_ACHIEVEMENT.P_id;
+
+-- 🛠️ ALTER TABLE COMMANDS
+
+-- Add a new column
+ALTER TABLE PLAYER ADD Email VARCHAR(100);
+
+-- Add multiple columns
+ALTER TABLE GAME_SESSIONS 
+ADD Location VARCHAR(50),
+    Game_Type VARCHAR(50);
+
+-- Modify column type
+ALTER TABLE PLAYER MODIFY Phone_no VARCHAR(20);
+
+-- Rename a column
+ALTER TABLE PLAYER RENAME COLUMN P_name TO Player_Name;
+
+-- Drop a column
+ALTER TABLE GAME_SESSIONS DROP COLUMN Game_Type;
+
+-- 📝 RENAME TABLE
+
+-- Rename PLAYER table
+RENAME TABLE PLAYER TO PLAYER_INFO;
+
+-- ✏️ UPDATE DATA
+
+-- Update player name
+UPDATE PLAYER_INFO SET Player_Name = 'Alicia' WHERE P_id = 1;
+
+-- ❌ DELETE ROWS
+
+-- Delete achievement by name
+DELETE FROM PLAYER_ACHIEVEMENT WHERE Achiev_name = 'FIRST WIN';
+
+-- 👁️ VIEWS
+
+-- Create view of player achievements
+CREATE VIEW View_PlayerAchievements AS
+SELECT P.P_id, P.Player_Name, A.Achiev_name
+FROM PLAYER_INFO P
+JOIN PLAYER_ACHIEVEMENT A ON P.P_id = A.P_id;
+
+-- Select from view
+SELECT * FROM View_PlayerAchievements;
+
+-- Update view (drop + recreate)
+DROP VIEW View_PlayerAchievements;
+
+CREATE VIEW View_PlayerAchievements AS
+SELECT P.P_id, P.Player_Name, A.Achiev_name
+FROM PLAYER_INFO P
+JOIN PLAYER_ACHIEVEMENT A ON P.P_id = A.P_id;
+
+-- Drop view
+DROP VIEW View_PlayerAchievements;
