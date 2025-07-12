@@ -1,6 +1,6 @@
 -- 🌐 OPEN MYSQL TERMINAL
-mysql -u root -p      -- Login to MySQL
-exit;                 -- Exit MySQL
+mysql -u root -p / sudo mysql     -- Login to MySQL
+exit;                             -- Exit MySQL
 
 -- 📁 DATABASE COMMANDS
 
