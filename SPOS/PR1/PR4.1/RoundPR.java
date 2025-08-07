@@ -1,12 +1,10 @@
 import java.io.*;
 
-public class RoundPR {
-    
-    public static void main(String args[]) throws IOException{
+class RoundPR {
+    public static void main(String args[]) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         int i, j, k, q, sum = 0;
- 
-        
+
         System.out.println("Enter number of processes:");
         int n = Integer.parseInt(in.readLine());
 
@@ -16,23 +14,24 @@ public class RoundPR {
         int a[] = new int[n];
 
         System.out.println("Enter Burst Time:");
-        for(i=0; i<n;i++){
-            System.out.println("Enter Burst Time for process" + (i + 1) + ":");
+        for (i = 0; i < n; i++) {
+            System.out.println("Enter Burst Time for process " + (i + 1) + ":");
             bt[i] = Integer.parseInt(in.readLine());
         }
 
         System.out.println("Enter Time Quantum:");
         q = Integer.parseInt(in.readLine());
 
-        for(i = 0; i < n; i++){
+        for (i = 0; i < n; i++) {
+            a[i] = bt[i];
+        }
+
+        for (i = 0; i < n; i++) {
             wt[i] = 0;
         }
 
-        for(i = 0; i < n; i++){
-            wt[i]=0;
-        }
-        do{
-            for(i = 0; i < n; i++){
+        do {
+            for (i = 0; i < n; i++) {
                 if (bt[i] > q) {
                     bt[i] -= q;
                     for (j = 0; j < n; j++) {
@@ -49,12 +48,12 @@ public class RoundPR {
                     bt[i] = 0;
                 }
             }
+
             sum = 0;
             for (k = 0; k < n; k++) {
                 sum += bt[k];
             }
-        }
-        while (sum != 0);
+        } while (sum != 0);
 
         for (i = 0; i < n; i++) {
             tat[i] = wt[i] + a[i];
